@@ -30,7 +30,7 @@ namespace SakilaAPI.Controllers
                 var actors = await context.Actors.Where(t => t.FirstName.Contains(name) || t.LastName.Contains(name)).ToListAsync();
                 if (!actors.Any())
                 {
-                    return NotFound();
+                    return NoContent();
                 }
                 return Ok(actors);
             }
@@ -49,7 +49,7 @@ namespace SakilaAPI.Controllers
                 var actor = context.Actors.FirstOrDefault(a => a.Id == id);
                 if (actor == null)
                 {
-                    return NotFound();
+                    return NoContent();
                 }
                 return Ok(actor);
             }
@@ -80,7 +80,7 @@ namespace SakilaAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Ok(ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace SakilaAPI.Controllers
                     var actor = await context.Actors.FirstOrDefaultAsync(a => a.Id == id);
                     if (actor == null)
                     {
-                        return NotFound();
+                        return NoContent();
                     }
                     var result = context.Remove(actor);
                     await context.SaveChangesAsync();
@@ -108,7 +108,7 @@ namespace SakilaAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Ok(ex.Message);
             }
         }
     }
