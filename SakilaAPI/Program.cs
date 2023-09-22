@@ -1,27 +1,24 @@
-using SakilaAPI.Core;
+using Microsoft.AspNetCore;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddCore();
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace SakilaAPI
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    /// <summary>
+    /// Program
+    /// </summary>
+    public static class Program
+    {
+        /// <summary>
+        /// main run application
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Main(string[] args)
+        {
+            var builder = BuilderWebHost(args);
+            builder.Build().Run();
+        }
+
+        static IWebHostBuilder BuilderWebHost(string[] args)=>
+            WebHost.CreateDefaultBuilder(args)
+                    .UseStartup<Startup>();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

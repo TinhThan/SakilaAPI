@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SakilaAPI</name>
+    </assembly>
+    <members>
+        <member name="T:SakilaAPI.Controllers.ActorController">
+            <summary>
+            Controller actor
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Controllers.ActorController.#ctor(Microsoft.Extensions.Logging.ILogger{SakilaAPI.Controllers.ActorController},MediatR.IMediator)">
+            <summary>
+            Contructor ActorController
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:SakilaAPI.Controllers.ActorController.DanhSach(System.String)">
+            <summary>
+            Danh sách actor by name
+            </summary>
+            <param name="name"></param>
+            <response code="200">Lấy danh sách actor thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
+        <member name="M:SakilaAPI.Controllers.ActorController.ChiTiet(System.Int32)">
+            <summary>
+            Lấy chi tiết actor by id
+            </summary>
+            <param name="id"></param>
+            <response code="200">Lấy chi tiết actor thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
+        <member name="M:SakilaAPI.Controllers.ActorController.TaoMoi(SakilaAPI.Core.Models.ActorTaoMoiModel)">
+            <summary>
+            Thêm mới actor
+            </summary>
+            <param name="model"></param>
+            <response code="200">Thêm mới actor thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
+        <member name="M:SakilaAPI.Controllers.ActorController.Xoa(System.Int32)">
+            <summary>
+            Xóa actor
+            </summary>
+            <param name="id"></param>
+            <response code="200">Xóa actor thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
+        <member name="T:SakilaAPI.Controllers.CustomBaseController">
+            <summary>
+            CustomBaseController
+            </summary>
+        </member>
+        <member name="F:SakilaAPI.Controllers.CustomBaseController._mediator">
+            <summary>
+            Triển khai CQRS with Mediator
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Controllers.CustomBaseController.#ctor(MediatR.IMediator)">
+            <summary>
+            Contructor
+            </summary>
+            <param name="mediator"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.CQRS.Actor.QueryHandler.ActorDetailQueryHandler">
+            <summary>
+            ActorDetailQueryHandler
+            </summary>
+        </member>
+        <member name="F:SakilaAPI.Core.CQRS.Actor.QueryHandler.ActorDetailQueryHandler._dataContext">
+            <summary>
+            Khai báo datacontext
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.CQRS.Actor.QueryHandler.ActorDetailQueryHandler.#ctor(SakilaAPI.Core.DataContext)">
+            <summary>
+            Contructor ActorDetailQueryHandler
+            </summary>
+            <param name="dataContext"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.CQRS.Actor.QueryHandler.ActorDetailQueryHandler.Handle(SakilaAPI.Core.CQRS.Actor.Query.ActorDetailQuery,System.Threading.CancellationToken)">
+            <summary>
+            Xử lý lấy chi tiết diển viên
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:SakilaAPI.Core.CQRS.Actor.Query.ActorDetailQuery">
+            <summary>
+            Chi tiết diển viên theo id
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.CQRS.Actor.Query.ActorDetailQuery.Id">
+            <summary>
+            Id actor
+            </summary>
+        </member>
+        <member name="T:SakilaAPI.Core.DataContext">
+            <summary>
+            Datacontext quản lý tương tác với database
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.DataContext.Actors">
+            <summary>
+            create Dbset entity actors
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.DataContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            Config datacontext
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.DataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Cấu hình cấu trúc database, ánh xạ entity với các table, thiết lập quy tắc và liên kết các table
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.ApiExceptionFilter">
+            <summary>
+            Attribute xử xý exception cho controller action
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.#ctor">
+            <summary>
+            Ánh xạ các exception cho từ handle
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Xử lý các exception bình thường
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleUnknowException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary> 
+            Handler xử lý exception unknow
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleServerException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handler xử lý exception of server
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleClientErrorException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handler xử lý exception of client
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleSuccessException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            Handler xử lý success exception
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.CustomException">
+            <summary>
+            Custom exception
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Exceptions.CustomException.Code">
+            <summary>
+            property code
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Exceptions.CustomException.Title">
+            <summary>
+            property title
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Exceptions.CustomException.Description">
+            <summary>
+            description
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Exceptions.CustomException.Descriptions">
+            <summary>
+            Descriptions
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.CustomException.#ctor">
+            <summary>
+            Khởi tạo exception
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.CustomException.#ctor(System.String)">
+            <summary>
+            Khởi tạo exception with message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.CustomException.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Khởi tạo exception
+            </summary>
+            <param name="code"></param>
+            <param name="title"></param>
+            <param name="description"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.CustomException.#ctor(System.Int32,System.String,System.Object[])">
+            <summary>
+            Khởi tạo exception
+            </summary>
+            <param name="code"></param>
+            <param name="title"></param>
+            <param name="descriptions"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.StatusClientErrorException">
+            <summary>
+            client error exception
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Exceptions.StatusClientErrorException.Errors">
+            <summary>
+            dictionary errors
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusClientErrorException.#ctor">
+            <summary>
+            Khởi tạo exception với status code 400
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusClientErrorException.#ctor(System.Collections.Generic.IDictionary{System.String,System.String[]})">
+            <summary>
+            Khởi tạo exception với danh sách lỗi
+            </summary>
+            <param name="errors"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusClientErrorException.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.Results.ValidationFailure})">
+            <summary>
+            Triển khai cấu hính status code với validation
+            </summary>
+            <param name="failures"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.StatusServerErrorException">
+            <summary>
+            exception trả về khi code error
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusServerErrorException.#ctor">
+            <summary>
+            Contrustor
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusServerErrorException.#ctor(System.String,System.String)">
+            <summary>
+            Contructor with title description
+            </summary>
+            <param name="title"></param>
+            <param name="description"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusServerErrorException.#ctor(System.String,System.Object[])">
+            <summary>
+            Contructor with title descriptions
+            </summary>
+            <param name="title"></param>
+            <param name="descriptions"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusServerErrorException.#ctor(System.Int32,System.String,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="code"></param>
+            <param name="title"></param>
+            <param name="descriptions"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.StatusSuccessException">
+            <summary>
+            Exception case success
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusSuccessException.#ctor">
+            <summary>
+            Contructor StatusSuccessException
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusSuccessException.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Contructor with title description
+            </summary>
+            <param name="statusCode"></param>
+            <param name="title"></param>
+            <param name="description"></param>
+        </member>
+        <member name="M:SakilaAPI.Core.Exceptions.StatusSuccessException.#ctor(System.String,System.String)">
+            <summary>
+            Contructor with title description
+            </summary>
+            <param name="title"></param>
+            <param name="description"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.RegisterServices">
+            <summary>
+            Đăng ký các service
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.RegisterServices.AddCore(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Đăng ký các service
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SakilaAPI.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Program.Main(System.String[])">
+            <summary>
+            main run application
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:SakilaAPI.Startup">
+            <summary>
+            Startup
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Startup.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            config startup application
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:SakilaAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configuration services
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:SakilaAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configuration application
+            </summary>
+            <param name="app"></param>
+            <param name="environment"></param>
+        </member>
+        <member name="T:SakilaAPI.Validations.Actor.ActorDetailQueryValidator">
+            <summary>
+            Validator of ActorDetailQuery
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Validations.Actor.ActorDetailQueryValidator.#ctor">
+            <summary>
+            Contructor
+            </summary>
+        </member>
+    </members>
+</doc>
