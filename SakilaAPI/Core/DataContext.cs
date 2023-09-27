@@ -12,6 +12,7 @@ namespace SakilaAPI.Core
         /// create Dbset entity actors
         /// </summary>
         public virtual DbSet<ActorEntity> Actors { get; set; }
+        public virtual DbSet<FilmEntity> Films { get; set; }
 
         /// <summary>
         /// Config datacontext
@@ -38,6 +39,12 @@ namespace SakilaAPI.Core
                 entity.Property(t => t.FirstName).HasColumnName("first_name");
                 entity.Property(t => t.LastName).HasColumnName("last_name");
                 entity.Property(t => t.LastUpdate).HasColumnName("last_update");
+            });
+
+            modelBuilder.Entity<FilmEntity>(entity =>
+            {
+                entity.ToTable("film");
+                entity.HasKey(e => e.FilmId);
             });
         }
     }

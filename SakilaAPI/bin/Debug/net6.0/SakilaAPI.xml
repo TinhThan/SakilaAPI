@@ -124,43 +124,113 @@
             </summary>
             <param name="modelBuilder"></param>
         </member>
-        <member name="T:SakilaAPI.Core.Exceptions.ApiExceptionFilter">
+        <member name="T:SakilaAPI.Core.Entities.FilmEntity">
+            <summary>
+            Entity film
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.FilmId">
+            <summary>
+            Id film
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.Title">
+            <summary>
+            Tiêu đề
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.Description">
+            <summary>
+            Mô tả
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.ReleaseYear">
+            <summary>
+            Năm phát hành
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.LanguageId">
+            <summary>
+            Ngôn ngữ
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.OriginalLanguageId">
+            <summary>
+            Ngôn ngữ gốc
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.RentalDuration">
+            <summary>
+            Thời lượng thuê
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.RentalRate">
+            <summary>
+            Giá thuê (theo đô la)
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.Length">
+            <summary>
+            length
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.ReplacementCost">
+            <summary>
+            Giá thay thế
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.Rating">
+            <summary>
+            Đánh giá
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.SpecialFeatures">
+            <summary>
+            Tính năng đặc biệt
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Entities.FilmEntity.LastUpdate">
+            <summary>
+            Lần cuối cập nhật
+            </summary>
+        </member>
+        <member name="T:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute">
             <summary>
             Attribute xử xý exception cho controller action
             </summary>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.#ctor">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.#ctor">
             <summary>
             Ánh xạ các exception cho từ handle
             </summary>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary>
             Xử lý các exception bình thường
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleUnknowException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.HandleUnknowException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary> 
             Handler xử lý exception unknow
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleServerException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.HandleServerException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary>
-            Handler xử lý exception of server
+            Handler xử lý exception of server - code 5xx
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleClientErrorException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.HandleClientErrorException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary>
-            Handler xử lý exception of client
+            Handler xử lý exception of client(code 4xx)
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilter.HandleSuccessException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+        <member name="M:SakilaAPI.Core.Exceptions.ApiExceptionFilterAttribute.HandleSuccessException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
             <summary>
-            Handler xử lý success exception
+            Handler xử lý success exception - code 2xx
             </summary>
             <param name="context"></param>
         </member>
