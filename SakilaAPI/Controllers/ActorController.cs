@@ -96,6 +96,7 @@ namespace SakilaAPI.Controllers
                     };
                     await context.Actors.AddAsync(actorEntity);
                     await context.SaveChangesAsync();
+                    _logger.LogDebug("Tao moi thanh cong Actor Id: {0}", actorEntity.Id);
                     return Ok("Thêm thành công");
                 }
             }
@@ -129,6 +130,7 @@ namespace SakilaAPI.Controllers
                     }
                     context.Remove(actor);
                     await context.SaveChangesAsync();
+                    _logger.LogDebug("Xoa thanh cong Actor Id: {0}", actor.Id);
                     return Ok("Xóa thành công");
                 }
             }
