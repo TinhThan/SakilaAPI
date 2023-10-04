@@ -32,13 +32,13 @@ namespace SakilaAPI.Core.Exceptions
         public StatusSuccessException(string title, string description) : base(StatusCodes.Status200OK, title, description)
         { }
 
-        ///// <summary>
-        ///// Contructor with title descriptions
-        ///// </summary>
-        ///// <param name="title"></param>
-        ///// <param name="descriptions"></param>
-        //public StatusSuccessException(string title, object[] descriptions) : base(StatusCodes.Status200OK, title, descriptions)
-        //{
-        //}
+        /// <summary>
+        /// Contructor with title descriptions
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="descriptions"></param>
+        public StatusSuccessException(string title, object[] descriptions) : base(StatusCodes.Status200OK, title, descriptions)
+        {
+        }
     }
 }

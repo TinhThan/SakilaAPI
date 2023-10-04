@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SakilaAPI.Core;
+using SakilaAPI.Core.CQRS.Actor.Command;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Entities;
 using SakilaAPI.Core.Exceptions;
 using SakilaAPI.Core.Models;
+using SakilaAPI.Core.Models.Actor;
 
 namespace SakilaAPI.Controllers
 {
@@ -19,11 +21,7 @@ namespace SakilaAPI.Controllers
 
         private readonly ILogger<ActorController> _logger;
 
-        /// <summary>
-        /// Contructor ActorController
-        /// </summary>
-        /// <param name="logger"></param>
-        public ActorController(ILogger<ActorController> logger, IMediator mediator):base(mediator)
+        public ActorController(ILogger<ActorController> logger, IMediator mediator) : base(mediator)
         {
             _logger = logger;
         }
@@ -31,25 +29,20 @@ namespace SakilaAPI.Controllers
         /// <summary>
         /// Danh sách actor by name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="soluong"></param>
         /// <response code="200">Lấy danh sách actor thành công</response>
         /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
         /// <response code="500">Lỗi đến từ server</response>
-        [HttpGet("danhsach/{name}")]
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(List<ActorModel>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest,Type = typeof(ExceptionResponse))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError,Type = typeof(ExceptionResponse))]
-        public async Task<IActionResult> DanhSach(string name)
+        [HttpGet("danhsach/{soluong}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ActorModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
+        public async Task<List<ActorModel>> DanhSach(int soluong)
         {
-            using (var context = new DataContext())
+            return await _mediator.Send(new ActorListQuery()
             {
-                var actors = await context.Actors.Where(t => t.FirstName.Contains(name) || t.LastName.Contains(name)).ToListAsync();
-                if (!actors.Any())
-                {
-                    return NoContent();
-                }
-                return Ok(actors);
-            }
+                soLuong = soluong
+            });
         }
 
         /// <summary>
@@ -82,27 +75,33 @@ namespace SakilaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-        public async Task<IActionResult> TaoMoi(ActorTaoMoiModel model)
+        public async Task<string> TaoMoi(ActorTaoMoiModel model)
         {
-            try
+            return await _mediator.Send(new TaoMoiActorQuery()
             {
-                using (var context = new DataContext())
-                {
-                    var actorEntity = new ActorEntity()
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        LastUpdate = DateTime.Now
-                    };
-                    await context.Actors.AddAsync(actorEntity);
-                    await context.SaveChangesAsync();
-                    return Ok("Thêm thành công");
-                }
-            }
-            catch (Exception ex)
+                ActorTaoMoiModel = model
+            });
+        }
+
+        /// <summary>
+        /// Cập nhật actor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <response code="200">Cập nhật actor thành công</response>
+        /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+        /// <response code="500">Lỗi đến từ server</response>
+        [HttpPost("capnhat/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
+        public async Task<string> CapNhat(int id, ActorCapNhatModel model)
+        {
+            return await _mediator.Send(new CapNhatActorQuery()
             {
-                return Ok(ex);
-            }
+                CapNhatModel = model,
+                Id = id
+            });
         }
 
         /// <summary>

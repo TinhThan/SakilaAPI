@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Exceptions;
@@ -7,45 +9,21 @@ using SakilaAPI.Core.Models;
 namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
 {
     /// <summary>
-    /// ActorDetailQueryHandler
+    /// Actor Detail QueryHandler
     /// </summary>
-    public class ActorDetailQueryHandler : IRequestHandler<ActorDetailQuery, ActorModel>
+    public class ActorDetailQueryHandler : BaseHandler, IRequestHandler<ActorDetailQuery, ActorModel>
     {
-        /// <summary>
-        /// Khai báo datacontext
-        /// </summary>
-        private readonly DataContext _dataContext;
-
-        /// <summary>
-        /// Contructor ActorDetailQueryHandler
-        /// </summary>
-        /// <param name="dataContext"></param>
-        public ActorDetailQueryHandler(DataContext dataContext)
+        public ActorDetailQueryHandler(DataContext dataContext, IMapper mapper) : base(dataContext, mapper)
         {
-            _dataContext = dataContext;
         }
 
-        /// <summary>
-        /// Xử lý lấy chi tiết diển viên
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<ActorModel> Handle(ActorDetailQuery request, CancellationToken cancellationToken)
         {
-            var actor = await _dataContext.Actors.FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
-            if (actor == null)
+            var actorModel = await _dataContext.Actors.ProjectTo<ActorModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
+            if (actorModel == null)
             {
                 throw new StatusSuccessException(StatusCodes.Status204NoContent, "Actor không tồn tại", request.Id.ToString());
             }
-            var actorModel = new ActorModel()
-            {
-                Id = actor.Id,
-                FirstName = actor.FirstName,
-                LastName = actor.LastName,
-                LastUpdate = actor.LastUpdate
-            };
             return actorModel;
         }
     }

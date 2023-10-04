@@ -14,7 +14,7 @@ namespace SakilaAPI.Validations.Actor
         public ActorDetailQueryValidator()
         {
             RuleFor(t => t.Id)
-                .GreaterThan(0).WithMessage("Id không được rỗng.");
+                .GreaterThan(0).WithMessage("Id_Not_Empty");
         }
     }
 }

@@ -19,6 +19,13 @@ namespace SakilaAPI
 
         static IWebHostBuilder BuilderWebHost(string[] args)=>
             WebHost.CreateDefaultBuilder(args)
+                    .ConfigureLogging(logging =>
+                    {
+                        //revmove provider loging
+                        logging.ClearProviders();
+                        //add logging with console
+                        logging.AddConsole();
+                    })
                     .UseStartup<Startup>();
     }
 }

@@ -1,7 +1,9 @@
 ﻿using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SakilaAPI.Core;
 using SakilaAPI.Core.Exceptions;
+using SakilaAPI.Core.Middlewares;
 using System.Reflection;
 
 namespace SakilaAPI
@@ -37,6 +39,7 @@ namespace SakilaAPI
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
             //services.AddFluentValidation()
             services.AddEndpointsApiExplorer();
+
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new OpenApiInfo { Title = "SakilaAPI", Version = "v1" });
@@ -62,15 +65,16 @@ namespace SakilaAPI
         /// </summary>
         /// <param name="app"></param>
         /// <param name="environment"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
             if (environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Sakila API v1"));
             }
-
+            loggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
+            app.UseMiddleware<RequestResponseMiddleware>();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

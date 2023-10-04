@@ -15,6 +15,12 @@ namespace SakilaAPI.Core.Exceptions
             Code = StatusCodes.Status500InternalServerError;
         }
 
+        public StatusServerErrorException(string title) : base(title)
+        {
+            Code = StatusCodes.Status500InternalServerError;
+            Title = title;
+        }
+
         /// <summary>
         /// Contructor with title description
         /// </summary>

@@ -13,6 +13,7 @@ namespace SakilaAPI.Core.Base.Validator
         {
             _validators = validators;
         }
+
         public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (_validators.ToList().Any())
