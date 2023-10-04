@@ -27,7 +27,7 @@
             <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
             <response code="500">Lỗi đến từ server</response>
         </member>
-        <member name="M:SakilaAPI.Controllers.ActorController.TaoMoi(SakilaAPI.Core.Models.ActorTaoMoiModel)">
+        <member name="M:SakilaAPI.Controllers.ActorController.TaoMoi(SakilaAPI.Core.Models.Actor.ActorTaoMoiModel)">
             <summary>
             Thêm mới actor
             </summary>
@@ -46,15 +46,6 @@
             <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
             <response code="500">Lỗi đến từ server</response>
         </member>
-        <member name="M:SakilaAPI.Controllers.ActorController.Xoa(System.Int32)">
-            <summary>
-            Xóa actor
-            </summary>
-            <param name="id"></param>
-            <response code="200">Xóa actor thành công</response>
-            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
-            <response code="500">Lỗi đến từ server</response>
-        </member>
         <member name="T:SakilaAPI.Controllers.CustomBaseController">
             <summary>
             CustomBaseController
@@ -70,6 +61,18 @@
             Contructor
             </summary>
             <param name="mediator"></param>
+        </member>
+        <member name="T:SakilaAPI.Core.Base.BaseHandler">
+            <summary>
+            Base handler có đăng ký sẳn mapper, datacontext
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Core.Base.BaseHandler.#ctor(AutoMapper.IMapper,SakilaAPI.Core.DataContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="mapper"></param>
+            <param name="dataContext"></param>
         </member>
         <member name="T:SakilaAPI.Core.CQRS.Actor.QueryHandler.ActorDetailQueryHandler">
             <summary>
@@ -379,6 +382,41 @@
         <member name="P:SakilaAPI.Core.Models.Actor.ActorCapNhatModel.LastUpdate">
             <summary>
             Kiểm tra version update
+            </summary>
+        </member>
+        <member name="T:SakilaAPI.Core.Paging.BasePagingModel">
+            <summary>
+            Model base paging
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Paging.BasePagingModel.KeySearch">
+            <summary>
+            Key search paging
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Paging.BasePagingModel.OrderColumnName">
+            <summary>
+            Order column name
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Paging.BasePagingModel.OrderColumnType">
+            <summary>
+            Order column type
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Paging.BasePagingModel.PageIndex">
+            <summary>
+            Page index
+            </summary>
+        </member>
+        <member name="P:SakilaAPI.Core.Paging.BasePagingModel.PageSize">
+            <summary>
+            Page size
+            </summary>
+        </member>
+        <member name="T:SakilaAPI.Core.Paging.Pagination`2">
+            <summary>
+            search data
             </summary>
         </member>
         <member name="T:SakilaAPI.Core.RegisterServices">

@@ -23,24 +23,11 @@ namespace SakilaAPI.Core
             services.AddDbContext<DataContext>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
-<<<<<<< HEAD
-            #region Config automapper
-
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            mappingConfig.AssertConfigurationIsValid();
-
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-=======
             #region Configuration Mapper
 
             var mapperConfig = new MapperConfiguration(x =>
             {
-                x.AddProfile(new AutoMapperProfile());
+                x.AddProfile(new MappingProfile());
             });
 
             //Nếu mapper bị lỗi thì throw ra
@@ -49,8 +36,6 @@ namespace SakilaAPI.Core
             IMapper mapper = mapperConfig.CreateMapper();
 
             services.AddSingleton(mapper);
-
->>>>>>> 101f70ef9824a639cdf251d6c3d58e415c903b47
             #endregion
 
             return services;

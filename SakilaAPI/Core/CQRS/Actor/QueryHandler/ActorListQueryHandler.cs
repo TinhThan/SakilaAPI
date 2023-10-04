@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Entities;
 using SakilaAPI.Core.Models;
+using SakilaAPI.Core.Models.Actor;
 
 namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
 {
