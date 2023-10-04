@@ -1,4 +1,4 @@
-﻿namespace SakilaAPI.Core.Models
+﻿namespace SakilaAPI.Core.Models.Actor
 {
     public class ActorTaoMoiModel
     {

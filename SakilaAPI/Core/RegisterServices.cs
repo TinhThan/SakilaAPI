@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SakilaAPI.Core.Base.Validator;
@@ -21,6 +22,23 @@ namespace SakilaAPI.Core
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddDbContext<DataContext>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
+            #region Configuration Mapper
+
+            var mapperConfig = new MapperConfiguration(x =>
+            {
+                x.AddProfile(new AutoMapperProfile());
+            });
+
+            //Nếu mapper bị lỗi thì throw ra
+            mapperConfig.AssertConfigurationIsValid();
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+
+            #endregion
+
             return services;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SakilaAPI.Core.Models;
+using SakilaAPI.Core.Models.Actor;
 
 namespace SakilaAPI.Core.CQRS.Actor.Query
 {

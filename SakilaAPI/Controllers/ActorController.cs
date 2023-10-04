@@ -5,7 +5,7 @@ using SakilaAPI.Core;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Entities;
 using SakilaAPI.Core.Exceptions;
-using SakilaAPI.Core.Models;
+using SakilaAPI.Core.Models.Actor;
 
 namespace SakilaAPI.Controllers
 {
