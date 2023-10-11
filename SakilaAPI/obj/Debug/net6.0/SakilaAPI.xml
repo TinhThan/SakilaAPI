@@ -99,11 +99,6 @@
             Datacontext quản lý tương tác với database
             </summary>
         </member>
-        <member name="P:SakilaAPI.Core.DataContext.Actors">
-            <summary>
-            create Dbset entity actors
-            </summary>
-        </member>
         <member name="M:SakilaAPI.Core.DataContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
             <summary>
             Config datacontext

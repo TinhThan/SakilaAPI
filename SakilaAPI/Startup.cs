@@ -35,6 +35,7 @@ namespace SakilaAPI
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("Sakila");
             services.AddCore();
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
             //services.AddFluentValidation()

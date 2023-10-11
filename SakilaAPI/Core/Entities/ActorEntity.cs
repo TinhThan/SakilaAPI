@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SakilaAPI.Core.Entities
+﻿namespace SakilaAPI.Core.Entities
 {
     public class ActorEntity
     {

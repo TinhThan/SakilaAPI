@@ -8,9 +8,12 @@ namespace SakilaAPI.Core
     /// </summary>
     public partial class DataContext : DbContext
     {
-        /// <summary>
-        /// create Dbset entity actors
-        /// </summary>
+        protected readonly IConfiguration _configuration;
+
+        public DataContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public virtual DbSet<ActorEntity> Actors { get; set; }
         public virtual DbSet<FilmEntity> Films { get; set; }
 
@@ -20,7 +23,7 @@ namespace SakilaAPI.Core
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Server=localhost;Port=3306;Database=sakila;User=root;Password=12345678;";
+            var connectionString = _configuration.GetConnectionString("Sakila");
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
