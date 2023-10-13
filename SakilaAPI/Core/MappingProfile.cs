@@ -13,10 +13,12 @@ namespace SakilaAPI.Core
 
             CreateMap<ActorTaoMoiModel, ActorEntity>()
                 .ForMember(src => src.Id, desc => desc.Ignore())
+                .ForMember(src => src.FilmActors, desc => desc.Ignore())
                 .ForMember(src => src.LastUpdate, desc => desc.Ignore());
 
             CreateMap<ActorCapNhatModel, ActorEntity>()
                 .ForMember(src => src.Id, desc => desc.Ignore())
+                .ForMember(src => src.FilmActors, desc => desc.Ignore())
                 .ForMember(src => src.LastUpdate, desc => desc.Ignore());
         }
     }

@@ -8,6 +8,12 @@ namespace SakilaAPI.Core.Entities
     /// </summary>
     public class FilmEntity
     {
+
+        public FilmEntity()
+        {
+            ActorFilms = new HashSet<ActorFilmEntity>();
+        }
+
         [Column("film_id")]
         public int FilmId { get; set; }
 
@@ -54,6 +60,6 @@ namespace SakilaAPI.Core.Entities
         [Required]
         public DateTime LastUpdate { get; set; }
 
-        List<ActorEntity> Actors { get; set; }
+        public virtual ICollection<ActorFilmEntity> ActorFilms { get; set; }
     }
 }

@@ -21,6 +21,8 @@ namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
 
         public async Task<ActorModel> Handle(ActorDetailQuery request, CancellationToken cancellationToken)
         {
+            var actorFilm = await _dataContext.Actors.Where(t => t.Id == request.Id).Include(t => t.FilmActors).ToListAsync(cancellationToken);
+
             var actorModel = await _dataContext.Actors.ProjectTo<ActorModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
             if (actorModel == null)
             {
