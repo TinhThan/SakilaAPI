@@ -27,6 +27,9 @@ namespace SakilaAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var appSetting = Configuration.Get<AppSetting>();
+            CurretnOption.AuthenticationString = appSetting.AuthenticationString;
+            CurretnOption.Endpoints = appSetting.Endpoints;
         }
 
         /// <summary>
@@ -35,11 +38,11 @@ namespace SakilaAPI
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("Sakila");
             services.AddCore();
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
-            //services.AddFluentValidation()
+
             services.AddEndpointsApiExplorer();
+            services.AddHttpClient();
 
             services.AddSwaggerGen(s =>
             {

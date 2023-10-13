@@ -3,6 +3,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SakilaAPI.Core.Base.Validator;
+using SakilaAPI.ExternalService;
 using System.Reflection;
 
 namespace SakilaAPI.Core
@@ -18,7 +19,12 @@ namespace SakilaAPI.Core
         /// <param name="services"></param>
         /// <returns></returns>
         public static IServiceCollection AddCore(this IServiceCollection services) {
+
+            services.AddScoped<IFilmService, FilmService>();
+            services.AddScoped<ICallAPI, CallAPI>();
+
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddDbContext<DataContext>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

@@ -26,7 +26,7 @@ namespace Sakila_B.Controllers
         /// <response code="200">Lấy danh sách film thành công</response>
         /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
         /// <response code="500">Lỗi đến từ server</response>
-        [HttpGet("danhsach")]
+        [HttpGet("danhsachbyids")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<FilmModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]

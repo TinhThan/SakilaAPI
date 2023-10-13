@@ -6,6 +6,7 @@ using SakilaAPI.Core.Base;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Exceptions;
 using SakilaAPI.Core.Models.Actor;
+using SakilaAPI.ExternalService;
 
 namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
 {
@@ -14,20 +15,21 @@ namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
     /// </summary>
     public class ActorDetailQueryHandler : BaseHandler, IRequestHandler<ActorDetailQuery, ActorModel>
     {
-        public ActorDetailQueryHandler(DataContext dataContext, IMapper mapper) : base(dataContext, mapper)
+        private readonly IFilmService _filmService;
+        public ActorDetailQueryHandler(DataContext dataContext, IMapper mapper, IFilmService filmService) : base(dataContext, mapper)
         {
-
+            _filmService = filmService;
         }
 
         public async Task<ActorModel> Handle(ActorDetailQuery request, CancellationToken cancellationToken)
         {
-            var actorFilm = await _dataContext.Actors.Where(t => t.Id == request.Id).Include(t => t.FilmActors).ToListAsync(cancellationToken);
-
-            var actorModel = await _dataContext.Actors.ProjectTo<ActorModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
+            var actorModel = await _dataContext.Actors.Include(t => t.FilmActors)
+                                    .ProjectTo<ActorModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
             if (actorModel == null)
             {
                 throw new StatusSuccessException(StatusCodes.Status204NoContent, "Actor không tồn tại", request.Id.ToString());
             }
+            actorModel.Films = await _filmService.DanhSachFilmByIds(actorModel.IdFilms.Distinct().ToArray());
             return actorModel;
         }
     }
