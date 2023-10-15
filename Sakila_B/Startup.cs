@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Sakila_B.Core;
+using Sakila_B.Core.Authentication;
 using Sakila_B.Core.Exceptions;
 using Sakila_B.Core.Middlewares;
 using System.Reflection;
@@ -38,6 +39,7 @@ namespace Sakila_B
             var connectionString = Configuration.GetConnectionString("Sakila");
             services.AddCore();
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
+            services.AddControllers(options => options.Filters.Add<ApiKeyAuthFilter>());
             //services.AddFluentValidation()
             services.AddEndpointsApiExplorer();
 
@@ -48,6 +50,30 @@ namespace Sakila_B
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 s.IncludeXmlComments(xmlPath);
+
+                // add form authentication for swagger 
+                s.AddSecurityDefinition("PrivateKey", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Secret-Key",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Secret-Key"
+                });
+                var scheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "PrivateKey"
+                    },
+                    In = ParameterLocation.Header
+                };
+                var requirement = new OpenApiSecurityRequirement
+                {
+                    {scheme, new List<string>()}
+                };
+                s.AddSecurityRequirement(requirement);
             });
 
             //Cấu hình cors cho phép tất cả các header và method
@@ -75,6 +101,9 @@ namespace Sakila_B
             }
             loggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
+            
+            //Use Auth with middleware
+            //app.UseMiddleware<ApiKeyAuthMiddleware>();
             app.UseMiddleware<RequestResponseMiddleware>();
             app.UseRouting();
             app.UseAuthorization();
