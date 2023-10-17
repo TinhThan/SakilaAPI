@@ -5,6 +5,7 @@ using SakilaAPI.Core.Contants;
 using SakilaAPI.Core.CQRS.User.Command;
 using SakilaAPI.Core.Exceptions;
 using SakilaAPI.Core.Middlewares;
+using System.Security.Claims;
 
 namespace SakilaAPI.Core.CQRS.User.CommandHandler
 {
@@ -24,11 +25,13 @@ namespace SakilaAPI.Core.CQRS.User.CommandHandler
                 throw new StatusSuccessException(StatusCodes.Status204NoContent, "Người dùng không tồn tại", request.LoginModel.UserName);
             }
 
-            var claims = new Dictionary<string, string>();
-            claims.Add("username", userExists.UserName);
-            claims.Add("permission", userExists.Permission);
-
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name,userExists.UserName),
+                new Claim(ClaimTypes.Role,userExists.Permission)
+            };
             var refreshToken = userExists.RefreshToken = HelperIdentity.GenerateRefreshToken();
+            userExists.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(CurrentOption.AuthenticationString.ExpiredRefreshToken);
             try
             {
                 _dataContext.Users.Update(userExists);

@@ -14,7 +14,8 @@
 
     public class AuthenticationString
     {
-        public double ExpiredToken { get; set; }
+        public int ExpiredToken { get; set; }
+        public int ExpiredRefreshToken { get; set; }
         public string Issuer { get; set; }
         public string PrivateKey { get; set; }
         public string ApiName { get; set; }

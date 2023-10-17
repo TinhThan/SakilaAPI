@@ -8,7 +8,7 @@ namespace SakilaAPI.Core.Models.User
 
         public string Password { get; set; }
 
-        public string Permission { get; set; }
+        public List<string> Permission { get; set; }
 
         public string? RefreshToken { get; set; }
 

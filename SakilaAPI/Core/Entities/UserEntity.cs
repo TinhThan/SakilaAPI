@@ -20,5 +20,8 @@ namespace SakilaAPI.Core.Entities
 
         [Column("last_update")]
         public DateTime? LastUpdate { get; set; }
+
+        [Column("refreshTokenExpiryTime")]
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }

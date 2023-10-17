@@ -9,7 +9,6 @@ namespace SakilaAPI.Validations.User
         public LoginCommandValidator()
         {
             RuleFor(v => v.LoginModel.UserName)
-                .Matches("^[0-9]+$").WithMessage(MessageSystem.USERNAME_ISNOT_NUMBERPHONE)
                 .NotEmpty().WithMessage(MessageSystem.USERNAME_IS_EMPTY);
 
             RuleFor(v => v.LoginModel.Password)

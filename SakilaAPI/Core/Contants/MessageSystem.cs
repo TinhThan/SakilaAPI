@@ -16,7 +16,11 @@
         public const string msgAUTH_AUTHENTICATED_FAIL = "Chứng thực không thành công.";
         public const string AUTH_AUTHENTICATED_ERROR = "Auth_Authenticated_Error";
         public const string TOKEN_NOT_FOUND = "Token_Not_Found";
+
         public const string REFRESH_TOKEN_NOT_FOUND = "Refresh_Token_Not_Found";
+        public const string REFRESH_TOKEN_INVALID = "Refresh_Token_Invalid";
+        public const string REFRESH_TOKEN_EXPIRED = "Refresh_Token_Expired";
+
         public const string TIME_NOT_FOUND = "Time_Not_Found";
         public const string TOKEN_EXPIRED = "Token_Expired";
         public const string TOKEN_INVALID = "Token_Invalid";

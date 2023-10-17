@@ -76,6 +76,24 @@
             <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
             <response code="500">Lỗi đến từ server</response>
         </member>
+        <member name="M:SakilaAPI.Controllers.UserController.DangKy(SakilaAPI.Core.Models.User.RegisterModel)">
+            <summary>
+            Đăng ký
+            </summary>
+            <param name="registerModel"></param>
+            <response code="200">Đăng ký thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
+        <member name="M:SakilaAPI.Controllers.UserController.RefreshToken(SakilaAPI.Core.Models.User.RefreshTokenModel)">
+            <summary>
+            Refresh token
+            </summary>
+            <param name="refreshTokenModel"></param>
+            <response code="200">Refresh token thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
         <member name="T:SakilaAPI.Core.Base.BaseHandler">
             <summary>
             Base handler có đăng ký sẳn mapper, datacontext

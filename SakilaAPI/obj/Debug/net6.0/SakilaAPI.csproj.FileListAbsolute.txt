@@ -303,3 +303,9 @@ D:\22424018\CongNgheLapTrinhHienDai\Project\22424018\SakilaAPI\SakilaAPI\bin\Deb
 D:\22424018\CongNgheLapTrinhHienDai\Project\22424018\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
 D:\22424018\CongNgheLapTrinhHienDai\Project\22424018\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 D:\22424018\CongNgheLapTrinhHienDai\Project\22424018\SakilaAPI\SakilaAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Document\Courses\ModernProgrammingTechnologies\Project\22424018_22424010_21424053_21424042\SakilaAPI\SakilaAPI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

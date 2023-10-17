@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -52,27 +53,42 @@ namespace SakilaAPI.Core.Middlewares
             return Convert.ToBase64String(hashed);
         }
 
-        public static string GenerateToken(Dictionary<string, string> liststrClaim)
+        public static string GenerateToken(List<Claim> listClaim)
         {
-            List<Claim> listClaim = new List<Claim>();
-            liststrClaim.ToList().ForEach(x =>
-            {
-                listClaim.Add(new Claim(x.Key, x.Value));
-            });
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var secretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(CurrentOption.AuthenticationString.PrivateKey));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature);
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Issuer = CurrentOption.AuthenticationString.Issuer,
-                Subject = new ClaimsIdentity(listClaim),
-                Expires = DateTime.Now.AddMinutes(CurrentOption.AuthenticationString.ExpiredToken),
-                SigningCredentials = signinCredentials
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var tokenDescriptor = new JwtSecurityToken(
+            
+                issuer: CurrentOption.AuthenticationString.Issuer,
+                audience: CurrentOption.AuthenticationString.Issuer,
+                claims: listClaim,
+                expires: DateTime.Now.AddMinutes(CurrentOption.AuthenticationString.ExpiredToken),
+                signingCredentials: signinCredentials
+            );
+            return tokenHandler.WriteToken(tokenDescriptor);
+        }
 
-            return tokenHandler.WriteToken(token);
+        public static ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var secretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(CurrentOption.AuthenticationString.PrivateKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = secretKey
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            JwtSecurityToken jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
+            return principal;
         }
 
         public static string GenerateRefreshToken()
