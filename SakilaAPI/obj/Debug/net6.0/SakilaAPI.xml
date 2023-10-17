@@ -62,6 +62,20 @@
             </summary>
             <param name="mediator"></param>
         </member>
+        <member name="T:SakilaAPI.Controllers.UserController">
+            <summary>
+            Controller user
+            </summary>
+        </member>
+        <member name="M:SakilaAPI.Controllers.UserController.DangNhap(SakilaAPI.Core.Models.User.LoginModel)">
+            <summary>
+            Đăng nhập
+            </summary>
+            <param name="loginModel"></param>
+            <response code="200">Đăng nhập thành công</response>
+            <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
+            <response code="500">Lỗi đến từ server</response>
+        </member>
         <member name="T:SakilaAPI.Core.Base.BaseHandler">
             <summary>
             Base handler có đăng ký sẳn mapper, datacontext
@@ -299,7 +313,7 @@
             <param name="title"></param>
             <param name="descriptions"></param>
         </member>
-        <member name="T:SakilaAPI.Core.Middlewares.RequestResponseMiddleware">
+        <member name="T:SakilaAPI.Core.Middlewares.LoggerMiddleware">
             <summary>
             Middleware xử lý logger sau khi xử lý handler
             </summary>

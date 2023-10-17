@@ -16,6 +16,7 @@ namespace SakilaAPI.Core
         }
         public virtual DbSet<ActorEntity> Actors { get; set; }
         public virtual DbSet<FilmEntity> Films { get; set; }
+        public virtual DbSet<UserEntity> Users { get; set; }
         public virtual DbSet<ActorFilmEntity> ActorFilms { get; set; }
 
         /// <summary>
@@ -51,10 +52,16 @@ namespace SakilaAPI.Core
                 entity.HasKey(e => e.FilmId);
             });
 
+            modelBuilder.Entity<UserEntity>(entity =>
+            {
+                entity.ToTable("user");
+                entity.HasKey(e => e.UserName);
+            });
+
             modelBuilder.Entity<ActorFilmEntity>(entity =>
             {
                 entity.ToTable("film_actor");
-                entity.HasKey(e => new { e.ActorId,e.FilmId});
+                entity.HasKey(e => new { e.ActorId, e.FilmId });
                 entity.HasOne(d => d.Actor)
                     .WithMany(p => p.FilmActors)
                     .HasForeignKey(d => d.ActorId)

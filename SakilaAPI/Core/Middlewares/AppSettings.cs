@@ -1,6 +1,6 @@
 ﻿namespace SakilaAPI.Core.Middlewares
 {
-    public class CurretnOption
+    public class CurrentOption
     {
         public static AuthenticationString AuthenticationString { get; set; }= new AuthenticationString();
         public static Dictionary<string, string> Endpoints { get; set; }
@@ -15,6 +15,7 @@
     public class AuthenticationString
     {
         public double ExpiredToken { get; set; }
+        public string Issuer { get; set; }
         public string PrivateKey { get; set; }
         public string ApiName { get; set; }
 

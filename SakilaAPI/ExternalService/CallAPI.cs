@@ -38,7 +38,7 @@ namespace SakilaAPI.ExternalService
         public void SetTokenHeaders(string url, string contentType)
         {
             long time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            var privateKey = CurretnOption.AuthenticationString.PrivateKey;
+            var privateKey = CurrentOption.AuthenticationString.PrivateKey;
             var token = HelperIdentity.ComputeSHA256Hash(url + time.ToString() + privateKey);
             var headers = new Dictionary<string, string>() { { "time", time.ToString() }, { "token", token },{ "role", "external_sub" } };
 
@@ -72,13 +72,13 @@ namespace SakilaAPI.ExternalService
 
         public string GetFullLink(string api, string slug, string[] valueOfFormat)
         {
-            if (CurretnOption.Endpoints.Count == 0)
+            if (CurrentOption.Endpoints.Count == 0)
             {
                 return string.Empty;
             }
             else
             {
-                return string.Format(CurretnOption.Endpoints[api] + slug, valueOfFormat);
+                return string.Format(CurrentOption.Endpoints[api] + slug, valueOfFormat);
             }
         }
 

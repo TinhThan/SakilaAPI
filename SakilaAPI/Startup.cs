@@ -28,8 +28,8 @@ namespace SakilaAPI
         {
             Configuration = configuration;
             var appSetting = Configuration.Get<AppSetting>();
-            CurretnOption.AuthenticationString = appSetting.AuthenticationStrings;
-            CurretnOption.Endpoints = appSetting.Endpoints;
+            CurrentOption.AuthenticationString = appSetting.AuthenticationStrings;
+            CurrentOption.Endpoints = appSetting.Endpoints;
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using SakilaAPI.Core.Entities;
 using SakilaAPI.Core.Models;
 using SakilaAPI.Core.Models.Actor;
+using SakilaAPI.Core.Models.User;
 
 namespace SakilaAPI.Core
 {
@@ -22,6 +23,8 @@ namespace SakilaAPI.Core
                 .ForMember(src => src.Id, desc => desc.Ignore())
                 .ForMember(src => src.FilmActors, desc => desc.Ignore())
                 .ForMember(src => src.LastUpdate, desc => desc.Ignore());
+
+            CreateMap<UserEntity, UserModel>().ReverseMap();
         }
     }
 }

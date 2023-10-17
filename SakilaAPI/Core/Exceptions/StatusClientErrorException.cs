@@ -42,7 +42,7 @@ namespace SakilaAPI.Core.Exceptions
 
             foreach (var failureGroup in failureGroups)
             {
-                Errors.Add(failureGroup.Key, failureGroup.ToArray());
+                Errors.Add(failureGroup.Key, failureGroup.Distinct().ToArray());
             }
         }
     }
