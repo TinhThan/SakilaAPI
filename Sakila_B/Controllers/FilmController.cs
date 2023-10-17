@@ -11,7 +11,6 @@ namespace Sakila_B.Controllers
     [Route("api/film")]
     public class FilmController : CustomBaseController
     {
-
         private readonly ILogger<FilmController> _logger;
 
         public FilmController(ILogger<FilmController> logger, IMediator mediator) : base(mediator)

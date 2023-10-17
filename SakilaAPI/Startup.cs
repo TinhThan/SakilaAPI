@@ -28,7 +28,7 @@ namespace SakilaAPI
         {
             Configuration = configuration;
             var appSetting = Configuration.Get<AppSetting>();
-            CurretnOption.AuthenticationString = appSetting.AuthenticationString;
+            CurretnOption.AuthenticationString = appSetting.AuthenticationStrings;
             CurretnOption.Endpoints = appSetting.Endpoints;
         }
 
@@ -78,7 +78,7 @@ namespace SakilaAPI
             }
             loggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
-            app.UseMiddleware<RequestResponseMiddleware>();
+            app.UseMiddleware<LoggerMiddleware>();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

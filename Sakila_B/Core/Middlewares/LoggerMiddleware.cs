@@ -1,17 +1,21 @@
-﻿namespace SakilaAPI.Core.Middlewares
+﻿using Sakila_B.Core.Contants;
+
+namespace Sakila_B.Core.Middlewares
 {
     /// <summary>
     /// Middleware xử lý logger sau khi xử lý handler
     /// </summary>
-    public class RequestResponseMiddleware
+    public class LoggerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<RequestResponseMiddleware> _logger;
+        private readonly ILogger<LoggerMiddleware> _logger;
+        private readonly IConfiguration _configuration;
 
-        public RequestResponseMiddleware(RequestDelegate next, ILogger<RequestResponseMiddleware> logger)
+        public LoggerMiddleware(RequestDelegate next, ILogger<LoggerMiddleware> logger, IConfiguration configuration)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _configuration = configuration;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -53,6 +57,37 @@
             {
                 context.Response.Body = originalBody;
             }
+        }
+
+        // Authentication Secret Key
+        public async Task CheckTokenExternalService(HttpContext context)
+        {
+            var urlApi = context.Request.Path.Value;
+            if (!context.Request.Headers.TryGetValue(AuthConstants.Auth_Token, out var extractedApiKey))
+            {
+                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_NOT_FOUND);
+                return;
+            }
+
+            if (!context.Request.Headers.TryGetValue(AuthConstants.Auth_Time, out var time) || !long.TryParse(time, out var dateTime))
+            {
+                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TIME_NOT_FOUND);
+                return;
+            }
+
+            if (!HelperIdentity.CheckTime(dateTime))
+            {
+                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_EXPIRED);
+                return;
+            }
+
+            var privateKey = _configuration.GetValue<string>(AuthConstants.ApiKeySectionName);
+            if (!HelperIdentity.ComputeSHA256Hash(urlApi + dateTime.ToString() + privateKey).Equals(extractedApiKey))
+            {
+                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_INVALID);
+                return;
+            }
+            await _next(context);
         }
     }
 }

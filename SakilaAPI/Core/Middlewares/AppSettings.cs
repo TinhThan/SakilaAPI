@@ -4,14 +4,11 @@
     {
         public static AuthenticationString AuthenticationString { get; set; }= new AuthenticationString();
         public static Dictionary<string, string> Endpoints { get; set; }
-        public CurretnOption()
-        {
-        }
     }
 
     public class AppSetting
     {
-        public AuthenticationString AuthenticationString { get; set; }
+        public AuthenticationString AuthenticationStrings { get; set; }
         public Dictionary<string, string> Endpoints { get; set; }
     }
 

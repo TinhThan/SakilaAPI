@@ -1,14 +1,14 @@
-﻿namespace Sakila_B.Core.Middlewares
+﻿namespace SakilaAPI.Core.Middlewares
 {
     /// <summary>
     /// Middleware xử lý logger sau khi xử lý handler
     /// </summary>
-    public class RequestResponseMiddleware
+    public class LoggerMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<RequestResponseMiddleware> _logger;
+        private readonly ILogger<LoggerMiddleware> _logger;
 
-        public RequestResponseMiddleware(RequestDelegate next, ILogger<RequestResponseMiddleware> logger)
+        public LoggerMiddleware(RequestDelegate next, ILogger<LoggerMiddleware> logger)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

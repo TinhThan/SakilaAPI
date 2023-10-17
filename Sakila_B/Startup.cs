@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Sakila_B.Core;
-using Sakila_B.Core.Authentication;
 using Sakila_B.Core.Exceptions;
 using Sakila_B.Core.Middlewares;
 using System.Reflection;
@@ -36,10 +35,8 @@ namespace Sakila_B
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("Sakila");
             services.AddCore();
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
-            services.AddControllers(options => options.Filters.Add<ApiKeyAuthFilter>());
             //services.AddFluentValidation()
             services.AddEndpointsApiExplorer();
 
@@ -101,10 +98,10 @@ namespace Sakila_B
             }
             loggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
-            
+
             //Use Auth with middleware
-            //app.UseMiddleware<ApiKeyAuthMiddleware>();
-            app.UseMiddleware<RequestResponseMiddleware>();
+            app.UseMiddleware<AuthorizeMiddleware>();
+            app.UseMiddleware<LoggerMiddleware>();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
