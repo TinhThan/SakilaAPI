@@ -12,8 +12,7 @@ namespace SakilaAPI.Core
         public MappingProfile()
         {
             CreateMap<ActorEntity, ActorModel>()
-                .ForMember(src => src.Films, desc => desc.Ignore())
-                .ForMember(src => src.IdFilms, desc => desc.MapFrom(t => t.FilmActors.Select(x => x.FilmId)));
+                .ForMember(src => src.Films, desc => desc.Ignore());
 
             CreateMap<ActorTaoMoiModel, ActorEntity>()
                 .ForMember(src => src.Id, desc => desc.Ignore())

@@ -23,13 +23,13 @@ namespace SakilaAPI.Core.CQRS.Actor.QueryHandler
 
         public async Task<ActorModel> Handle(ActorDetailQuery request, CancellationToken cancellationToken)
         {
-            var actorModel = await _dataContext.Actors.Include(t => t.FilmActors)
-                                    .ProjectTo<ActorModel>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
-            if (actorModel == null)
+            var actorEntity = await _dataContext.Actors.Include(t => t.FilmActors).FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
+            if (actorEntity == null)
             {
                 throw new StatusSuccessException(StatusCodes.Status204NoContent, "Actor không tồn tại", request.Id.ToString());
             }
-            actorModel.Films = await _filmService.DanhSachFilmByIds(actorModel.IdFilms.Distinct().ToArray());
+            var actorModel = _mapper.Map<ActorModel>(actorEntity);
+            actorModel.Films = await _filmService.DanhSachFilmByIds(actorEntity.FilmActors.Select(t => t.FilmId).Distinct().ToArray());
             return actorModel;
         }
     }

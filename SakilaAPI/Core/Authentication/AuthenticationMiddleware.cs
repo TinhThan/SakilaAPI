@@ -72,7 +72,6 @@ namespace SakilaAPI.Core.Authentication
                     }
                 }
 
-                await _requestDelegate(context);
             }
             catch (Exception ex)
             {
@@ -81,6 +80,7 @@ namespace SakilaAPI.Core.Authentication
                 context.Items["StatusToken"] = HelperIdentity.StatusError(ex.Message);
                 context.Items["MessageToken"] = HelperIdentity.MessageError(ex.Message);
             }
+            await _requestDelegate(context);
         }
 
         private bool IsAllowAnonymous(HttpContext context)

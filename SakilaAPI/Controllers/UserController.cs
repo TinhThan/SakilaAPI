@@ -36,7 +36,7 @@ namespace SakilaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ExceptionResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ExceptionResponse))]
-        public async Task<Dictionary<string, string>> DangNhap(LoginModel loginModel)
+        public async Task<AccessTokenResponse> DangNhap(LoginModel loginModel)
         {
             return await _mediator.Send(new LoginCommand()
             {

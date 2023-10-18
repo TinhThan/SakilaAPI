@@ -9,6 +9,5 @@ namespace SakilaAPI.Core.Models.Actor
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<FilmModel> Films { get; set; }
-        public List<int> IdFilms { get; set; }
     }
 }

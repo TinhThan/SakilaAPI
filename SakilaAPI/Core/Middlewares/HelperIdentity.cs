@@ -66,7 +66,7 @@ namespace SakilaAPI.Core.Middlewares
                 Issuer = CurrentOption.AuthenticationString.Issuer,
                 Audience = CurrentOption.AuthenticationString.Issuer,
                 Subject = new ClaimsIdentity(listClaim),
-                Expires = DateTime.Now.AddHours(CurrentOption.AuthenticationString.ExpiredToken),
+                Expires = DateTime.Now.AddMinutes(CurrentOption.AuthenticationString.ExpiredToken),
                 SigningCredentials = signinCredentials
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
