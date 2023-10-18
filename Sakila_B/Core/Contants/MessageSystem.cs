@@ -12,6 +12,12 @@
         public const string TOKEN_EXPIRED = "Token_Expired";
         public const string TOKEN_INVALID = "Token_Invalid";
 
+        public const string AUTH_FORBIDDEN = "Forbidden";
+        public const string AUTH_NOT_AUTHENTICATED = "Auth_Not_Authenticated";
+        public const string AUTH_AUTHENTICATED_ACCEPT = "Auth_Authenticated_Accept";
+        public const string AUTH_AUTHENTICATED_DENY = "Auth_Authenticated_Deny";
+        public const string AUTH_AUTHENTICATED_VALIDATED = "Auth_Authenticated_Validated";
+
         public const string DATA_INVALID = "Thông tin không hợp lệ.";
         public const string VERSION_UPDATE = "Version_Update";
         public const string ADD_SUCCESS = "Add_Success";

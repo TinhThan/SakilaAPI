@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using SakilaAPI.Core.Contants;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -12,6 +13,8 @@ namespace SakilaAPI.Core.Middlewares
     {
         private const string _Salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
         private const int _iterCount = 10000;
+
+        const string strExpiredDate = "IDX10223";
 
         public static async Task ThrowAuthException(HttpContext context, string message, string detail)
         {
@@ -57,16 +60,18 @@ namespace SakilaAPI.Core.Middlewares
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var secretKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(CurrentOption.AuthenticationString.PrivateKey));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            var tokenDescriptor = new JwtSecurityToken(
-            
-                issuer: CurrentOption.AuthenticationString.Issuer,
-                audience: CurrentOption.AuthenticationString.Issuer,
-                claims: listClaim,
-                expires: DateTime.Now.AddMinutes(CurrentOption.AuthenticationString.ExpiredToken),
-                signingCredentials: signinCredentials
-            );
-            return tokenHandler.WriteToken(tokenDescriptor);
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature);
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Issuer = CurrentOption.AuthenticationString.Issuer,
+                Audience = CurrentOption.AuthenticationString.Issuer,
+                Subject = new ClaimsIdentity(listClaim),
+                Expires = DateTime.Now.AddHours(CurrentOption.AuthenticationString.ExpiredToken),
+                SigningCredentials = signinCredentials
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
 
         public static ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
@@ -97,6 +102,35 @@ namespace SakilaAPI.Core.Middlewares
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
+        }
+
+        private static Dictionary<string, string> ListError = new Dictionary<string, string>()
+        {
+            { strExpiredDate, MessageSystem.TOKEN_EXPIRED }
+        };
+
+        public static string StatusError(string exMessage)
+        {
+            if (exMessage.Contains(strExpiredDate))
+            {
+                return ListError[strExpiredDate];
+            }
+            else
+            {
+                return MessageSystem.AUTH_AUTHENTICATED_ERROR;
+            }
+        }
+
+        public static string MessageError(string exMessage)
+        {
+            if (exMessage.Contains(strExpiredDate))
+            {
+                return ListError[strExpiredDate];
+            }
+            else
+            {
+                return exMessage;
+            }
         }
     }
 }

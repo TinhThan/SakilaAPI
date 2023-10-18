@@ -1,0 +1,68 @@
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using SakilaAPI.Core.Contants;
+using SakilaAPI.Core.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+
+namespace SakilaAPI.Core.Authentication
+{
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+    {
+        public AuthorizeAttribute()
+        {
+        }
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            try
+            {
+                var _itemsDataContext = context.HttpContext.Items;
+                if (_itemsDataContext["StatusToken"].ToString() != MessageSystem.AUTH_AUTHENTICATED_ACCEPT)
+                {
+                    var statusToken = _itemsDataContext["StatusToken"].ToString();
+                    var messageToken = _itemsDataContext["MessageToken"]?.ToString();
+
+                    if (_itemsDataContext["StatusToken"].ToString() == MessageSystem.AUTH_FORBIDDEN)
+                    {
+                        context.Result = new JsonResult(
+                                        new
+                                        {
+                                            Status = StatusCodes.Status403Forbidden,
+                                            Detail = MessageSystem.AUTH_FORBIDDEN,
+                                            Description = messageToken
+                                        })
+                        {
+                            StatusCode = StatusCodes.Status403Forbidden
+                        };
+                    }
+                    else
+                    {
+                        context.Result = new JsonResult(
+                                        new
+                                        {
+                                            Status = StatusCodes.Status401Unauthorized,
+                                            Detail = statusToken,
+                                            Description = messageToken
+                                        })
+                        {
+                            StatusCode = StatusCodes.Status401Unauthorized
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new StatusServerErrorException(MessageSystem.AUTH_AUTHENTICATED_ERROR, ex.ToString());
+            }
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AllowAnonymousAttribute : Attribute, IAllowAnonymous
+    {
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            context.HttpContext.Items["StatusToken"] = MessageSystem.Anonymous;
+        }
+    }
+}

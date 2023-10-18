@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SakilaAPI.Core.Authentication;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.CQRS.User.Command;
 using SakilaAPI.Core.Exceptions;
-using SakilaAPI.Core.Models.Actor;
 using SakilaAPI.Core.Models.User;
 
 namespace SakilaAPI.Controllers
@@ -12,7 +12,7 @@ namespace SakilaAPI.Controllers
     /// Controller user
     /// </summary>
     [ApiController]
-    [Route("api/user")]
+    [Route("api/[controller]")]
     public class UserController : CustomBaseController
     {
 
@@ -31,6 +31,7 @@ namespace SakilaAPI.Controllers
         /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
         /// <response code="500">Lỗi đến từ server</response>
         [HttpPost("login")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dictionary<string, string>))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ExceptionResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ExceptionResponse))]
@@ -50,6 +51,7 @@ namespace SakilaAPI.Controllers
         /// <response code="200">Đăng ký thành công</response>
         /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
         /// <response code="500">Lỗi đến từ server</response>
+        [AllowAnonymous]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dictionary<string, string>))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ExceptionResponse))]
@@ -70,6 +72,7 @@ namespace SakilaAPI.Controllers
         /// <response code="200">Refresh token thành công</response>
         /// <response code="400">Một vài thông tin truyền vào không hợp lệ</response>
         /// <response code="500">Lỗi đến từ server</response>
+        [AllowAnonymous]
         [HttpPost("refreshtoken")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ExceptionResponse))]
