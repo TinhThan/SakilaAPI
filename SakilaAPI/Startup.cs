@@ -81,6 +81,7 @@ namespace SakilaAPI
             app.UseMiddleware<LoggerMiddleware>();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseCors("AllOrigins");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
