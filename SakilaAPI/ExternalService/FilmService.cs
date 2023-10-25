@@ -20,7 +20,7 @@ namespace SakilaAPI.ExternalService
         {
             var listFilmModel = new List<FilmModel>();
             string url = _callAPI.GetFullLink(ActionUrl.API_Film, ActionUrl.Film_DanhSachByIds, new string[] { _callAPI.BuildParram(ids) });
-            _callAPI.SetTokenHeaders(url, "application/json");
+            //_callAPI.SetTokenHeaders(url, "application/json");
             var resultRequest = await _callAPI.CallAPIGet(url);
             return await _callAPI.Result(resultRequest, listFilmModel);
         }

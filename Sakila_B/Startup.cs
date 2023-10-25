@@ -37,7 +37,6 @@ namespace Sakila_B
         {
             services.AddCore();
             services.AddControllers(options => options.Filters.Add(new ApiExceptionFilterAttribute()));
-            //services.AddFluentValidation()
             services.AddEndpointsApiExplorer();
 
             services.AddSwaggerGen(s =>
@@ -100,7 +99,6 @@ namespace Sakila_B
             app.UseHttpsRedirection();
 
             //Use Auth with middleware
-            app.UseMiddleware<AuthorizeMiddleware>();
             app.UseMiddleware<LoggerMiddleware>();
             app.UseRouting();
             app.UseAuthorization();

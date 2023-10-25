@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SakilaAPI.Core.Contants;
 using SakilaAPI.Core.Middlewares;

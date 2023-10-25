@@ -58,36 +58,5 @@ namespace Sakila_B.Core.Middlewares
                 context.Response.Body = originalBody;
             }
         }
-
-        // Authentication Secret Key
-        public async Task CheckTokenExternalService(HttpContext context)
-        {
-            var urlApi = context.Request.Path.Value;
-            if (!context.Request.Headers.TryGetValue(AuthConstants.Auth_Token, out var extractedApiKey))
-            {
-                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_NOT_FOUND);
-                return;
-            }
-
-            if (!context.Request.Headers.TryGetValue(AuthConstants.Auth_Time, out var time) || !long.TryParse(time, out var dateTime))
-            {
-                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TIME_NOT_FOUND);
-                return;
-            }
-
-            if (!HelperIdentity.CheckTime(dateTime))
-            {
-                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_EXPIRED);
-                return;
-            }
-
-            var privateKey = _configuration.GetValue<string>(AuthConstants.ApiKeySectionName);
-            if (!HelperIdentity.ComputeSHA256Hash(urlApi + dateTime.ToString() + privateKey).Equals(extractedApiKey))
-            {
-                await HelperIdentity.ThrowAuthException(context, MessageSystem.msgAUTH_AUTHENTICATED_FAIL, MessageSystem.TOKEN_INVALID);
-                return;
-            }
-            await _next(context);
-        }
     }
 }
