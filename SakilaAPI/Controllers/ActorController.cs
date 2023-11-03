@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SakilaAPI.Core;
+using SakilaAPI.Core.Authentication;
 using SakilaAPI.Core.CQRS.Actor.Command;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.Entities;
@@ -13,6 +14,7 @@ namespace SakilaAPI.Controllers
     /// <summary>
     /// Controller actor
     /// </summary>
+    [Authorize]
     [ApiController]
     [Route("api/actor")]
     public class ActorController : CustomBaseController

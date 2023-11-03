@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SakilaAPI.Core;
+using SakilaAPI.Core.Authentication;
 using SakilaAPI.Core.Exceptions;
 using SakilaAPI.Core.Middlewares;
+using SakilaAPI.Core.NotifyHub;
 using System.Reflection;
 
 namespace SakilaAPI
@@ -104,12 +106,14 @@ namespace SakilaAPI
             loggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseMiddleware<AuthenticationMiddleware>();
             app.UseMiddleware<LoggerMiddleware>();
 
             app.UseCors("AllOrigins");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotifycationHub>("/notify");
             });
         }
     }

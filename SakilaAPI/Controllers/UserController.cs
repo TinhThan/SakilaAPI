@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SakilaAPI.Core.Authentication;
 using SakilaAPI.Core.CQRS.Actor.Query;
 using SakilaAPI.Core.CQRS.User.Command;
 using SakilaAPI.Core.Exceptions;
@@ -10,6 +11,7 @@ namespace SakilaAPI.Controllers
     /// <summary>
     /// Controller user
     /// </summary>
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : CustomBaseController

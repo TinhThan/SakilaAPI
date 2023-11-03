@@ -10,6 +10,9 @@ namespace SakilaAPI.ExternalService
     public interface ICallAPI
     {
         string BuildParram(int[] ids);
+        void SetHeaders(Dictionary<string, string> headers);
+        void SetTokenHeaders(string url, string contentType);
+        void ClearHeaders();
         string GetFullLink(string api, string slug, string[] valueOfFormat);
         Task<HttpResponseMessage> CallAPIGet(string url);
         Task<TModel> Result<TModel>(HttpResponseMessage resultRequest, TModel listDefault);
@@ -26,6 +29,29 @@ namespace SakilaAPI.ExternalService
             _logger = logger;
         }
 
+        public void SetHeaders(Dictionary<string, string> headers)
+        {
+            foreach (var header in headers)
+                _httpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
+        }
+
+        public void SetTokenHeaders(string url, string contentType)
+        {
+            long time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var privateKey = CurrentOption.AuthenticationString.PrivateKey;
+            var token = HelperIdentity.ComputeSHA256Hash(url + time.ToString() + privateKey);
+            var headers = new Dictionary<string, string>() { { "time", time.ToString() }, { "token", token }, { "role", "external_sub" } };
+
+            ClearHeaders();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(contentType));
+            SetHeaders(headers);
+        }
+
+        public void ClearHeaders()
+        {
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Clear();
+        }
         public string BuildParram(int[] ids)
         {
             if (ids == null) return string.Empty;

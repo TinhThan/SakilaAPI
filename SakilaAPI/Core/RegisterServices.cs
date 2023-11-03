@@ -19,7 +19,7 @@ namespace SakilaAPI.Core
         /// <param name="services"></param>
         /// <returns></returns>
         public static IServiceCollection AddCore(this IServiceCollection services) {
-
+            services.AddSignalR();
             services.AddScoped<IFilmService, FilmService>();
             services.AddScoped<ICallAPI, CallAPI>();
 

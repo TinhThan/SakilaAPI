@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\22424018\\CongNgheLapTrinhHienDai\\Project\\22424018\\SakilaAPI\\SakilaAPI\\SakilaAPI.csproj": {}
+    "C:\\Users\\LeeThanh\\OneDrive - VNU-HCMUS\\hcbYear2Semeter2\\CNLT_Hiện đại\\SakilaAPI_A\\SakilaAPI\\SakilaAPI.csproj": {}
   },
   "projects": {
-    "D:\\22424018\\CongNgheLapTrinhHienDai\\Project\\22424018\\SakilaAPI\\SakilaAPI\\SakilaAPI.csproj": {
+    "C:\\Users\\LeeThanh\\OneDrive - VNU-HCMUS\\hcbYear2Semeter2\\CNLT_Hiện đại\\SakilaAPI_A\\SakilaAPI\\SakilaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\22424018\\CongNgheLapTrinhHienDai\\Project\\22424018\\SakilaAPI\\SakilaAPI\\SakilaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\LeeThanh\\OneDrive - VNU-HCMUS\\hcbYear2Semeter2\\CNLT_Hiện đại\\SakilaAPI_A\\SakilaAPI\\SakilaAPI.csproj",
         "projectName": "SakilaAPI",
-        "projectPath": "D:\\22424018\\CongNgheLapTrinhHienDai\\Project\\22424018\\SakilaAPI\\SakilaAPI\\SakilaAPI.csproj",
-        "packagesPath": "C:\\Users\\tinh.than\\.nuget\\packages\\",
-        "outputPath": "D:\\22424018\\CongNgheLapTrinhHienDai\\Project\\22424018\\SakilaAPI\\SakilaAPI\\obj\\",
+        "projectPath": "C:\\Users\\LeeThanh\\OneDrive - VNU-HCMUS\\hcbYear2Semeter2\\CNLT_Hiện đại\\SakilaAPI_A\\SakilaAPI\\SakilaAPI.csproj",
+        "packagesPath": "C:\\Users\\LeeThanh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LeeThanh\\OneDrive - VNU-HCMUS\\hcbYear2Semeter2\\CNLT_Hiện đại\\SakilaAPI_A\\SakilaAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\tinh.than\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\LeeThanh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,6 +51,10 @@
             "MediatR.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[11.1.0, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -114,7 +114,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
